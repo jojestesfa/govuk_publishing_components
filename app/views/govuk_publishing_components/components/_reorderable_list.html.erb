@@ -1,0 +1,54 @@
+<%
+  items ||= []
+  input_name ||= "ordering"
+  data_attributes ||= {}
+  data_attributes[:module] = "reorderable-list"
+
+  numeric_list ||= false
+  border_bottom ||= false
+
+  classes = %w(gem-c-reorderable-list)
+  classes << "gem-c-reorderable-list--numeric-list" if numeric_list
+
+  list_item_classes = %w(gem-c-reorderable-list__item)
+  list_item_classes << "gem-c-reorderable-list__item--border" unless border_bottom
+  list_item_classes << "gem-c-reorderable-list__item--border-bottom" if border_bottom
+%>
+
+<%= tag.ol class: classes, data: data_attributes do %>
+  <% items.each_with_index do |item, index| %>
+    <%= tag.li class: list_item_classes do %>
+      <%= tag.div class: "gem-c-reorderable-list__wrapper" do %>
+        <%= tag.div class: "gem-c-reorderable-list__content" do %>
+          <%= tag.p item[:title], class: "gem-c-reorderable-list__title" %>
+          <%= tag.p item[:description], class: "gem-c-reorderable-list__description" %>
+        <% end %>
+        <%= tag.div class: "gem-c-reorderable-list__actions" do %>
+          <%= render "govuk_publishing_components/components/input", {
+            label: {
+              text: sanitize("Position<span class='govuk-visually-hidden'> for #{item[:title]}</span>")
+            },
+            name: "#{input_name}[#{item[:id]}]",
+            type: "number",
+            value: index + 1,
+            width: 2
+          } %>
+          <%= render "govuk_publishing_components/components/button", {
+            text: "Up",
+            type: "button",
+            aria_label: "Move #{item[:title]} up",
+            classes: "js-reorderable-list-up",
+            secondary_quiet: true
+          } %>
+          <%= render "govuk_publishing_components/components/button", {
+            text: "Down",
+            type: "button",
+            aria_label: "Move #{item[:title]} down",
+            classes: "js-reorderable-list-down",
+            secondary_quiet: true
+          } %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

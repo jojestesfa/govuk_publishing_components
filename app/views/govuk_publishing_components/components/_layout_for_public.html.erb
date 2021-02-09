@@ -5,6 +5,13 @@
   omit_header ||= false
   show_search = local_assigns.include?(:show_search) ? local_assigns[:show_search] : true
   layout_helper = GovukPublishingComponents::Presenters::PublicLayoutHelper.new(local_assigns)
+  global_bar ||= nil
+  body_classes = %w(
+    gem-c-layout-for-public
+    govuk-template__body
+  )
+
+  # body_classes << "show-global-bar" if global_bar.present?
 -%>
 <!DOCTYPE html>
   <!--[if lt IE 9]><html class="lte-ie8" lang="<%= html_lang %>"><![endif]-->
@@ -35,12 +42,12 @@
 
     <%= yield :head %>
   </head>
-  <body class="gem-c-layout-for-public govuk-template__body">
+  <body class="<%= body_classes.join(' ') %>">
     <script>
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
     <%= render "govuk_publishing_components/components/skip_link", {
-      href: "#content"
+      href: "#content",
     } %>
 
     <%= render "govuk_publishing_components/components/cookie_banner" %>
@@ -49,14 +56,19 @@
       <%= render "govuk_publishing_components/components/layout_header", {
         search: show_search,
         # layout-header will always have border-bottom, unless the layout is full width
-        remove_bottom_border: full_width,
+        remove_bottom_border: full_width || global_bar.present?,
       } %>
     <% end %>
-    <div class="<%= "govuk-width-container" unless full_width %>"  id="content">
+
+    <%= sanitize(global_bar) %>
+
+    <div class="<%= "govuk-width-container" unless full_width %>">
       <%= yield :before_content %>
-      <main class="govuk-main-wrapper">
-        <%= yield %>
-      </main>
+      <div id="content">
+        <main class="govuk-main-wrapper" id="wrapper">
+          <%= yield %>
+        </main>
+      </div>
     </div>
 
     <div class="govuk-width-container">

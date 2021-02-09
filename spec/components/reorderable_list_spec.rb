@@ -39,8 +39,8 @@ describe "Reorderable list", type: :view do
     render_component(items: items)
 
     assert_select ".gem-c-reorderable-list"
-    assert_select ".gem-c-reorderable-list__item.gem-c-reorderable-list__item--border", 5
-    assert_select ".gem-c-reorderable-list__item.gem-c-reorderable-list__item--border" do |elements|
+    assert_select ".gem-c-reorderable-list__item", 5
+    assert_select ".gem-c-reorderable-list__item" do |elements|
       elements.each_with_index do |element, index|
         assert_select element, ".gem-c-reorderable-list__title", { text: items[index][:title] }
         assert_select element, ".gem-c-reorderable-list__description", { text: items[index][:description] }
@@ -57,34 +57,10 @@ describe "Reorderable list", type: :view do
     render_component(items: items, input_name: "attachments[ordering]")
 
     assert_select ".gem-c-reorderable-list"
-    assert_select ".gem-c-reorderable-list__item.gem-c-reorderable-list__item--border" do |elements|
+    assert_select ".gem-c-reorderable-list__item" do |elements|
       elements.each_with_index do |element, index|
         assert_select element, ".gem-c-reorderable-list__actions input[name='attachments[ordering][#{items[index][:id]}]']"
       end
     end
-  end
-
-  it "renders a list of items as a numeric list" do
-    render_component(items: items, numeric_list: true)
-
-    assert_select ".gem-c-reorderable-list.gem-c-reorderable-list--numeric-list"
-    assert_select ".gem-c-reorderable-list__item.gem-c-reorderable-list__item--border", 5
-  end
-
-  it "renders a list of items as a numeric list and bottom border" do
-    render_component(items: items, numeric_list: true, border_bottom: true)
-
-    assert_select ".gem-c-reorderable-list.gem-c-reorderable-list--numeric-list"
-    assert_select ".gem-c-reorderable-list__item.gem-c-reorderable-list__item--border", false
-    assert_select ".gem-c-reorderable-list__item.gem-c-reorderable-list__item--border-bottom", 5
-  end
-
-  it "renders a list of items with bottom border" do
-    render_component(items: items, border_bottom: true)
-
-    assert_select ".gem-c-reorderable-list"
-    assert_select ".gem-c-reorderable-list.gem-c-reorderable-list--numeric-list", false
-    assert_select ".gem-c-reorderable-list__item.gem-c-reorderable-list__item--border", false
-    assert_select ".gem-c-reorderable-list__item.gem-c-reorderable-list__item--border-bottom", 5
   end
 end

@@ -12,22 +12,10 @@
   }
 }
 
-.gem-c-reorderable-list--numeric-list {
-  list-style-type: decimal;
-  padding-left: govuk-spacing(4);
-}
-
 .gem-c-reorderable-list__item {
   margin-bottom: govuk-spacing(3);
-}
-
-.gem-c-reorderable-list__item--border {
   border: 1px solid $govuk-border-colour;
   padding: govuk-spacing(3);
-}
-
-.gem-c-reorderable-list__item--border-bottom {
-  border-bottom: 1px solid $govuk-border-colour;
 }
 
 .gem-c-reorderable-list__item--chosen {

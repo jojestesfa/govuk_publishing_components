@@ -11,8 +11,9 @@ window.GOVUK.Modules = window.GOVUK.Modules || {};
     this.$module.revertToPasswordOnFormSubmit = this.revertToPasswordOnFormSubmit.bind(this)
     this.input.classList.add('gem-c-input--with-password')
 
-    this.showPasswordText = this.$module.getAttribute('data-show')
-    this.hidePasswordText = this.$module.getAttribute('data-hide')
+    this.passwordText = this.$module.getAttribute('data-password-text')
+    this.showPasswordText = this.$module.getAttribute('data-show-text') + ' <span class="govuk-visually-hidden">' + this.passwordText + '</span>'
+    this.hidePasswordText = this.$module.getAttribute('data-hide-text') + ' <span class="govuk-visually-hidden">' + this.passwordText + '</span>'
     this.shownPassword = this.$module.getAttribute('data-announce-show')
     this.hiddenPassword = this.$module.getAttribute('data-announce-hide')
 

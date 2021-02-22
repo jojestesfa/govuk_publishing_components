@@ -1,7 +1,12 @@
 module GovukPublishingComponents
   class AuditController < GovukPublishingComponents::ApplicationController
     def show
-      path = Dir.pwd
+      print Dir.pwd
+      if ENV["MAIN_COMPONENT_GUIDE"]
+        path = Dir.pwd
+      else
+        path = Gem.loaded_specs['govuk_publishing_components'].full_gem_path
+      end
 
       components = AuditComponents.new(path)
       applications = analyse_applications(File.expand_path("..", path))

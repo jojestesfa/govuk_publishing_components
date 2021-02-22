@@ -2,7 +2,7 @@
 
 <%= render 'govuk_publishing_components/components/title', title: "Components audit", margin_top: 0; %>
 
-<% if ENV["MAIN_COMPONENT_GUIDE"] %>
+<%# if ENV["MAIN_COMPONENT_GUIDE"] %>
   <div class="govuk-tabs" data-module="govuk-tabs">
     <h2 class="govuk-tabs__title">
       Contents
@@ -280,6 +280,6 @@
       <% end %>
     </div>
   </div>
-<% else %>
+<%# else %>
   <p class="govuk-body">Component auditing is only available when the component guide is running locally as a standalone app.</p>
-<% end %>
+<%# end %>
